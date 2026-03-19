@@ -116,10 +116,10 @@ ShanghaiTech Campus Surveillance Dataset
 * Finalizing model that is to be implemented
 
 ## Team
-Nanditha C
-Harisree M
-Yartha Vinutha
-Krishna Veni Valluri
+* Nanditha C
+* Harisree M
+* Yartha Vinutha
+* Krishna Veni Valluri
 
 ## Guide
 Dr. N Lalithamani
