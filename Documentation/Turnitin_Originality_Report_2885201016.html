@@ -1,0 +1,934 @@
+
+    
+<!DOCTYPE html>
+<html lang="en-us">
+
+<meta http-equiv="X-UA-Compatible" content="IE=7" />
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="author" content="Turnitin, LLC" />
+    <meta name="keywords" content="" /> 
+    <meta name="description" content="" />
+<title>Turnitin - Originality Report - final_rep (1).pdf </title>
+
+<base href="http://www.turnitin.com">
+<style type="text/css">
+body {
+    color: #333;
+    background: #C0C7CC;
+    padding: 0;
+    border: 0;
+    font: 13px Verdana, arial, sans-serif;
+    margin: 0;
+}
+
+form {
+    padding: 0;
+    margin: 0;
+}
+
+body#display {
+}
+
+body#bodysource {
+    width: 520px;
+    background: #F0F4FA;
+}
+
+p {
+    padding: 10px 18px;
+    margin: 0;
+}
+
+img {
+    border: 0;
+    padding: 0;
+}
+
+div {
+    padding: 0;
+    border: 0;
+}
+
+iframe {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+strong {
+    font-weight: bold;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    font-size: 13px;
+}
+
+ul li {
+    padding: 0;
+    margin: 0;
+    line-height: 16px;
+}
+
+#index span#exclude {
+    margin: 0 50px 0 23px;
+}
+
+#index a {
+    font-size: 11px;
+    padding: 0 8px;
+}
+
+#index select {
+    font-size: 12px;
+    border: 1px solid #888;
+}
+
+#index input.small {
+    margin: 0 0 0 5px;
+    width: 30px;
+    color: #D10A0A;
+    font-weight: bold;
+    font-size: 13px;
+    border: 1px solid #888;
+    vertical-align: baseline;
+}
+
+div.links {
+    width: 85%;
+    margin: 0 auto;
+    border-left: 1px solid #888;
+    border-right: 1px solid #888;
+    padding-top: 8px;
+    background: #E8EEF7;
+    text-align: left;
+}
+
+.links div {
+    padding: 5px 13px 10px 20px;
+    border-bottom: 1px dotted #888;
+}
+
+.links div p {
+    padding: 2px 0 0 40px;
+}
+
+div#body {
+    line-height: 17px;
+    width: 85%;
+    margin: auto;
+    padding: 20px 0;
+    background: #fff;
+    border-bottom: 1px solid #888;
+    border-right: 1px solid #888;
+    border-left: 1px solid #888;
+    text-align: left;
+}
+
+#body p {
+    color: #000;
+    padding-top: 10 0;
+    margin: 0 40px;
+}
+
+#actions {
+    display: none;
+}
+
+a.exclude {
+    float: right;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    bottom: 20px;
+}
+
+/*= SMALL MATCHES POPUP
+=== === === === === === === === === === === === === === === === === === === === === === === === === === === === === === */
+div#small_matches_prefs {
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 400px;
+    background-color: #FFF;
+    border: 1px solid #999;
+    text-align: right;
+}
+
+div#small_matches_prefs p {
+    padding: 7px;
+}
+
+div#small_matches_prefs li {
+    padding: 10px 40px 10px 0;
+    border-bottom: 1px solid #999;
+    cursor: pointer;
+    text-align: left;
+}
+
+div#small_matches_prefs li.selected {
+    background-color: #87A3C0;
+}
+
+div#small_matches_prefs li input {
+    text-align: center;
+    border: 1px solid #999;
+}
+
+div#small_matches_prefs li.disabled input {
+    color: #878787;
+    background-color: #E6E5E6;
+}
+
+div#small_matches_prefs ul label {
+    width: 100px;
+    text-align: right;
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+/*= GENERAL
+=== === === === === === === === === === === === === === === === === === === === === === === === === === === === === === */
+
+body #top_bar {
+    display: none !important;
+}
+
+body #index #exclude,
+#download_button,
+#print_button,
+#index .right {
+    display: inline-block;
+}
+
+body #index {
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #999;
+    background: #ececec url(new_dynamic/images/22bd7a01a025b8de122259e42762f0a7cb_ug_toolbar_bg.gif) repeat-x center left;
+}
+
+#toolbar_wrapper {
+    padding-left: 45px;
+}
+
+body #top {
+    width: 85%;
+    background-color: #FFF;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #999;
+    border-bottom: none;
+    height: 210px;
+}
+
+body #content {
+    padding: 10px 60px;
+}
+
+body div#prefs {
+    display: none;
+}
+
+body #top h1 {
+    font-size: 20px;
+    font-weight: normal;
+}
+
+body #top h1 strong {
+    font-weight: normal;
+}
+
+body #top h1 em {
+    font-style: normal;
+}
+
+
+/*body #top h2 {*/
+/*    font-size: 20px;*/
+/*    font-weight: normal;*/
+/*}*/
+
+/*body #top h2 strong {*/
+/*    font-weight: normal;*/
+/*}*/
+
+/*body #top h2 em {*/
+/*    font-style: normal;*/
+/*}*/
+
+
+body #top h2 {
+    font-size: 16px;
+    font-weight: normal;
+}
+
+body #top h2 strong {
+    font-weight: normal;
+}
+
+body #top h2 em {
+    font-style: normal;
+}
+
+
+body #top_body li { /*Paper info li*/
+    padding: 0;
+    margin: 0px 0px 2px 0px;
+    font-size: 10px;
+}
+
+#top_body #print_wrapper {
+    float: left;
+    width: 50%;
+}
+
+#top_body .similarity_print_wrapper {
+    width: 45%;
+    min-width: 283px;
+}
+
+#top_body .similarity_box { /*Similarity Box w/ Similarity by Source */
+    float: right;
+    border: solid 1px #666;
+    margin-top: 60px;
+    min-width: 350px;
+}
+
+#top_body .similarity_box .overall_similarity {
+    float: left;
+    border-right: solid 1px #666;
+}
+
+#top_body .similarity_box .overall_similarity .color_box {
+    font-size: 14px;
+    min-width: 140px;
+}
+
+#top_body .color_box.green {
+    background-color: green;
+}
+
+#top_body .color_box.blue {
+    background-color: blue;
+}
+
+#top_body .color_box.yellow {
+    background-color: yellow;
+}
+
+#top_body .color_box.orange {
+    background-color: orange;
+}
+
+#top_body .color_box.red {
+    background-color: red;
+}
+
+#top_body .similarity_box .overall_similarity .similarity_title {
+    font-size: 13px;
+    font-weight: normal;
+    padding: 5px 5px 5px;
+    text-align: center;
+}
+
+#top_body .similarity_box .overall_similarity .similarity_percent {
+    font-size: 25px;
+    font-family: georgia, times, serif;
+    padding: 5px 0px 15px;
+    text-align: center;
+}
+
+#top_body .similarity_box .overall_similarity a {
+    display: none;
+}
+
+#top_body .similarity_box .similarity_by_source {
+    float: right;
+    font-size: 10px;
+}
+
+#top_body .similarity_box .similarity_by_source .similarity_title {
+    padding: 6px 0px 0px 10px;
+    font-weight: bold;
+    text-align: left;
+}
+
+#top_body .similarity_box .similarity_by_source dl {
+    padding-left: 10px;
+    margin: 14px 7px 0px 0px;
+}
+
+#top_body .similarity_box .similarity_by_source dt {
+    float: left;
+    width: 160px;
+}
+
+#top_body .similarity_box .similarity_by_source dd {
+    float: left;
+    margin: 0px;
+}
+
+
+#index span#exclude {
+    margin: 0 50px 0 23px;
+}
+
+#index a {
+    font-size: 11px;
+    padding: 0 8px;
+}
+
+#index select {
+    font-size: 12px;
+    border: 1px solid #888;
+}
+
+#index input.small {
+    margin: 0 0 0 5px;
+    width: 30px;
+    color: #D10A0A;
+    font-weight: bold;
+    font-size: 13px;
+    border: 1px solid #888;
+    vertical-align: baseline;
+}
+
+div.links {
+    width: 85%;
+    margin: 0 auto;
+    border-left: 1px solid #888;
+    border-right: 1px solid #888;
+    padding-top: 8px;
+    background: #E8EEF7;
+    text-align: left;
+}
+
+.links div {
+    padding: 5px 13px 10px 20px;
+    border-bottom: 1px dotted #888;
+}
+
+.links div p {
+    padding: 2px 0 0 40px;
+}
+
+div#body {
+    line-height: 17px;
+    width: 85%;
+    margin: auto;
+    padding: 20px 0;
+    background: #fff;
+    border-bottom: 1px solid #888;
+    border-right: 1px solid #888;
+    border-left: 1px solid #888;
+    text-align: left;
+}
+
+#body p {
+    color: #000;
+    padding-top: 10 0;
+    margin: 0 40px;
+}
+
+#actions {
+    display: none;
+}
+
+button.exclude {
+    float: right;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+#small_matches_prefs {
+    display: none;
+}
+
+/*
+Copyright (c) 2009, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.net/yui/license.txt
+version: 2.7.0
+*/
+.yui-button{display:-moz-inline-box;display:inline-block;vertical-align:text-bottom;}.yui-button .first-child{display:block;*display:inline-block;}.yui-button button,.yui-button a{display:block;*display:inline-block;border:none;margin:0;}.yui-button button{background-color:transparent;*overflow:visible;cursor:pointer;}.yui-button a{text-decoration:none;}.yui-skin-sam .yui-button{border-width:1px 0;border-style:solid;border-color:#808080;background:url(../images/yui270/build/assets/skins/sam/96b257a32a932f7739d7dab52b38ee8fcb_sprite.png) repeat-x 0 0;margin:auto .25em;}.yui-skin-sam .yui-button .first-child{border-width:0 1px;border-style:solid;border-color:#808080;margin:0 -1px;_margin:0;}.yui-skin-sam .yui-button button,.yui-skin-sam .yui-button a{padding:0 10px;font-size:93%;line-height:2;*line-height:1.7;min-height:2em;*min-height:auto;color:#000;}.yui-skin-sam .yui-button a{*line-height:1.875;*padding-bottom:1px;}.yui-skin-sam .yui-split-button button,.yui-skin-sam .yui-menu-button button{padding-right:20px;background-position:right center;background-repeat:no-repeat;}.yui-skin-sam .yui-menu-button button{background-image:url(yui270/build/button/assets/skins/sam/6305efb37fa05af65c79b58b9d4c1b03cb_menu-button-arrow.png);}.yui-skin-sam .yui-split-button button{background-image:url(yui270/build/button/assets/skins/sam/ced974d5c685e5dfa0a37b824a6b5d48cb_split-button-arrow.png);}.yui-skin-sam .yui-button-focus{border-color:#7D98B8;background-position:0 -1300px;}.yui-skin-sam .yui-button-focus .first-child{border-color:#7D98B8;}.yui-skin-sam .yui-button-focus button,.yui-skin-sam .yui-button-focus a{color:#000;}.yui-skin-sam .yui-split-button-focus button{background-image:url(yui270/build/button/assets/skins/sam/36e66540d2feba76b8991e18b76fe93bcb_split-button-arrow-focus.png);}.yui-skin-sam .yui-button-hover{border-color:#7D98B8;background-position:0 -1300px;}.yui-skin-sam .yui-button-hover .first-child{border-color:#7D98B8;}.yui-skin-sam .yui-button-hover button,.yui-skin-sam .yui-button-hover a{color:#000;}.yui-skin-sam .yui-split-button-hover button{background-image:url(yui270/build/button/assets/skins/sam/36e66540d2feba76b8991e18b76fe93bcb_split-button-arrow-hover.png);}.yui-skin-sam .yui-button-active{border-color:#7D98B8;background-position:0 -1700px;}.yui-skin-sam .yui-button-active .first-child{border-color:#7D98B8;}.yui-skin-sam .yui-button-active button,.yui-skin-sam .yui-button-active a{color:#000;}.yui-skin-sam .yui-split-button-activeoption{border-color:#808080;background-position:0 0;}.yui-skin-sam .yui-split-button-activeoption .first-child{border-color:#808080;}.yui-skin-sam .yui-split-button-activeoption button{background-image:url(yui270/build/button/assets/skins/sam/890272b241c1d8a0db3ce5680b71fab0cb_split-button-arrow-active.png);}.yui-skin-sam .yui-radio-button-checked,.yui-skin-sam .yui-checkbox-button-checked{border-color:#304369;background-position:0 -1400px;}.yui-skin-sam .yui-radio-button-checked .first-child,.yui-skin-sam .yui-checkbox-button-checked .first-child{border-color:#304369;}.yui-skin-sam .yui-radio-button-checked button,.yui-skin-sam .yui-checkbox-button-checked button{color:#fff;}.yui-skin-sam .yui-button-disabled{border-color:#ccc;background-position:0 -1500px;}.yui-skin-sam .yui-button-disabled .first-child{border-color:#ccc;}.yui-skin-sam .yui-button-disabled button,.yui-skin-sam .yui-button-disabled a{color:#A6A6A6;cursor:default;}.yui-skin-sam .yui-menu-button-disabled button{background-image:url(yui270/build/button/assets/skins/sam/4df7235ca027f2546b2a216e59f81fb0cb_menu-button-arrow-disabled.png);}.yui-skin-sam .yui-split-button-disabled button{background-image:url(yui270/build/button/assets/skins/sam/db73dce6da2f5c5f02399c93488ce69ecb_split-button-arrow-disabled.png);}
+
+</style>
+
+
+
+</head>
+
+<body onload="">
+
+
+
+<link rel="stylesheet" type="text/css" href="/r/build/css/tii/88ee4ccd3555f2b759921fb5d58d83e5cb_container.css" media="all" />
+
+
+
+
+<script type="text/javascript" src="/r/build/js/tii/8b608684a5f4aec1b540987c93498c01cb_tii_anonymous_marking.js"></script>
+
+
+
+
+<script type="text/javascript">
+
+function initAnonymousMarking () {
+    // initialize panel.  
+    var config = {
+            zindex: 4,
+            underlay: 'none',
+            modal: true,
+            visible: false,
+            draggable: false,
+            close: false,
+            fixedcenter: true
+    };
+    if ($('disable_anonymous_marking')) {
+        disableAnonymousMarkingPanel = new IP.widget.Panel($('disable_anonymous_marking'), config);
+        if($D.hasClass('disable_anonymous_marking', 'app')) {
+            disableAnonymousMarkingPanel.center = function () {
+                var nViewportOffset = 20,
+                    elementWidth = this.element.offsetWidth,
+                    elementHeight = this.element.offsetHeight,
+                    viewPortWidth = $D.getViewportWidth(),
+                    viewPortHeight = $D.getViewportHeight(),
+                    x,
+                    y;
+
+                if (elementWidth < viewPortWidth) {
+                    x = (viewPortWidth / 2) - (elementWidth / 2) + $D.getDocumentScrollLeft();
+                } else {
+                    x = nViewportOffset + $D.getDocumentScrollLeft();
+                }
+
+				if (browser == 'Internet Explorer') {
+					x = 0;
+				}
+                y = 2 + $D.getDocumentScrollTop();
+
+                this.cfg.setProperty("xy", [parseInt(x, 10), parseInt(y, 10)]);
+                this.cfg.refireEvent("iframe");
+            };
+        }
+        disableAnonymousMarkingPanel.render(document.body);
+        disableAnonymousMarkingPanel.hideEvent.subscribe(function () { $('anonymous_error').innerHTML = ''; }, false);
+        disableAnonymousMarkingPanel.hide();
+        Element.show($('disable_anonymous_marking'));
+    }
+}
+
+function disableAM (data) {
+    $('anonymous_title').innerHTML = data.title;
+    document.disable_anonymous_marking_form.objectid.value = data.oid;
+    disableAnonymousMarkingPanel.show();
+}
+
+function checkDisableAM () {
+    var form = document.disable_anonymous_marking_form;
+    if (form.reason.value.length <= 5) {
+        $('anonymous_error').innerHTML = "Please provide a reason for turning anonymous marking off. Your reason must be more than 10 characters in length.";
+    }
+    else {
+        form.submit();
+    }
+    return;
+}
+
+YAHOO.util.Event.onDOMReady(initAnonymousMarking);
+
+</script>
+
+<div id="disable_anonymous_marking" class="app" style="display: none;">
+<div class="anonymous_frames">
+<form method="post" name="disable_anonymous_marking_form">
+    <input type="hidden" name="objectid" value=""/>
+    <input type="hidden" name="disable_anonymous_marking" value="1"/> 
+    <div class="anonymous_header">
+    	<h1>turn off anonymous marking</h1>
+		<p>Please state reason for turning off Anonymous Marking for: <span id="anonymous_title"></span><br />
+			<strong>Warning: Administrator has access to this information. This setting is permanent.</strong>
+        
+            </p>
+        
+    </div>
+    <div class="anonymous_body">
+        <textarea name="reason" cols="30" rows="3"></textarea>
+        <p id="anonymous_error"></p>
+    </div>
+    <div class="anonymous_footer">
+		<div class="anonymous_footer_buttons">
+            <span class="submit_form_button"><input type="button" onClick="checkDisableAM();" value="Submit"></span><br>
+        	<span class="submit_form_button"><input type="button" value="Cancel" onClick="disableAnonymousMarkingPanel.hide();"></span>
+		</div>
+    </div>
+</form>
+</div>
+</div>
+<div id="actions">
+<p>This is a preview of the print version of your report. Please click "print" to continue or "done" to close this window.</p>
+<script type="text/javascript" language="javascript">
+	var browserName=navigator.appName;
+	var browserVer=parseInt(navigator.appVersion);
+	if ((navigator.appVersion.indexOf("Mac")!=-1) && (browserName == "Microsoft Internet Explorer")) {
+		document.write('<span class="AR10">Type COMMAND-P to print.</span><br><br>');
+	} else {
+		document.write('<button onclick="window.print();">print</button>&nbsp;&nbsp;');
+	}
+</script>
+<button onclick="window.close();">done</button>
+</div>
+
+
+<!-- ########################### Preferences pop-up ##########################--> 
+
+<div name="top" id="header">
+
+<div id="prefs" role="dialog" style="display:none" aria-labelledby="prefs_link" aria-describedby="prefs_link" aria-owns="prefs_link">
+<div class="padding">
+<form name="prefs_form" method="post" accept-charset="utf-8">
+<script type="text/javascript" language="javascript">
+function savePrefs(){
+	if (document.prefs_form.changed.value == 1){
+		document.prefs_form.submit();
+	}else{
+        hidePrefsPane();
+	}
+}
+
+function handlePrefsPaneKeyUp (evt) {
+    // first check for IME compositions and ignore
+    if (evt.isComposing || evt.keyCode === 229) {
+        return;
+    }
+    if (evt.key === "Escape") {
+        evt.preventDefault();
+        evt.stopPropagation();
+        hidePrefsPane();
+    }
+}
+
+function showPrefsPane(){
+    const prefsDiv = document.getElementById('prefs');
+    prefsDiv.style.display='block';
+    prefsDiv.addEventListener('keyup', handlePrefsPaneKeyUp);
+    document.getElementById('use_colors').focus();
+}
+
+function hidePrefsPane(){
+    const prefsDiv = document.getElementById('prefs');
+    prefsDiv.style.display='none';
+    prefsDiv.removeEventListener('keyup', handlePrefsPaneKeyUp);
+    document.getElementById('prefs_link').focus();
+}
+
+var overlay, $D, $;
+
+function handleSmallMatchesPrefKeyUp (evt) {
+    // first check for IME compositions and ignore
+    if (evt.isComposing || evt.keyCode === 229) {
+        return;
+    }
+    if (evt.key === "Escape") {
+        evt.preventDefault();
+        evt.stopPropagation();
+        hideSmallMatchExclusions();
+    }
+}
+
+function showSmallMatchExclusions(left) {
+    $D = YAHOO.util.Dom;
+    $E = YAHOO.util.Event;
+    $ = $D.get;
+
+    $D.setStyle('small_matches_prefs', 'top', $D.getDocumentScrollTop() + 187 + 'px');
+    $D.setStyle('small_matches_prefs', 'left', left + 'px');
+
+    $D.setStyle('small_matches_prefs', 'display', 'block');
+    $D.setStyle('small_matches_prefs', 'visibility', 'visible');
+
+        // focus the field
+    $D.hasClass('exclude_by_percent_row', 'selected') ? $('exclude_by_percent_value').focus() : $('exclude_by_words_value').focus();
+    $E.on(window, 'scroll', repositionDialog);
+
+
+
+/*
+A problem occurs: when the focus moves from the wordcount field to the percentage field
+the existing percentage is floored. So even if the value is "correct", it gets incorrect,
+because the floored percentage is different from the word count. Especially in bigger texts and smaller matches
+this becomes an issue. So, the percentage displayed when updated from the word count should be the rounded one.
+only when the input itself is given manually, should this override the exclusionPercent value.
+
+This can be done as long as we use the functions below as actual keyboard handlers, so we can filter between numerical
+values entered and other keys (such as tab). Moreover, we could do up and down to increase or decrease the value.
+
+Because we will need to keep a state of the unrounded percentage, it is better to have that percentage value
+closed over.
+
+*/
+
+    let rawPercentage = 0;
+    function updateExcludePercentage(evt) {
+        // prevent symbol composing to interfere, 229 is a special code for the composition key
+        if (evt.isComposing || evt.keyCode === 229) {
+            return;
+        }
+        if (evt.key === "Escape") {
+            evt.preventDefault();
+            evt.stopPropagation();
+            hideSmallMatchExclusions();
+        }
+        else if (/[0-9]/.exec(evt.key) || evt.key === 'Backspace' || evt.key === 'Delete') { //only recalculate when the entered keys represent numbers
+            // only when entering or changing the value in the input field, it is clear that the user
+            // intended to use this specific exclusion method
+            selectSmallExclusionMethod('words');
+            const wordCount = this.value;
+
+            rawPercentage = wordCount / 1246 * 100;
+            $('exclude_by_percent_value').value = Math.floor(rawPercentage); // only display floored value
+        }
+    }
+
+    function updateExcludeWordCount(evt) {
+        // prevent symbol composing to interfere, 229 is a special code for the composition key
+        if (evt.isComposing || evt.keyCode === 229) {
+            return;
+        }
+        if (evt.key === "Escape") {
+            evt.preventDefault();
+            evt.stopPropagation();
+            hideSmallMatchExclusions();
+        }
+        else if (/[0-9]/.exec(evt.key) || evt.key === 'Backspace' || evt.key === 'Delete') { //only recalculate when the entered keys represent numbers
+            // only when entering or changing the value in the input field, it is clear that the user
+            // intended to use this specific exclusion method
+            selectSmallExclusionMethod('percent');
+
+            const percent = this.value;
+            var wordCount = Math.floor((percent/100) * 1246);
+
+            $('exclude_by_words_value').value = wordCount;
+        }
+    }
+    // set to global name space so hideSmallMatchesExclusions can also remove the listeners.
+    if (!window.updateExcludePercentage) window.updateExcludePercentage = updateExcludePercentage;
+    if (!window.updateExcludeWordCount) window.updateExcludeWordCount = updateExcludeWordCount;
+
+    document.getElementById('small_matches_prefs').addEventListener('keyup', handleSmallMatchesPrefKeyUp);
+    document.getElementById('exclude_by_words_value').addEventListener('keyup', updateExcludePercentage);
+    document.getElementById('exclude_by_percent_value').addEventListener('keyup', updateExcludeWordCount);
+
+}
+
+function repositionDialog() {
+    $D.setStyle('small_matches_prefs', 'top', $D.getDocumentScrollTop() + 187 + 'px');
+}
+
+function hideSmallMatchExclusions() {
+    document.getElementById('small_matches_prefs').removeEventListener('keyup', handleSmallMatchesPrefKeyUp);
+    document.getElementById('exclude_by_words_value').removeEventListener('keyup', updateExcludePercentage);
+    document.getElementById('exclude_by_percent_value').removeEventListener('keyup', updateExcludeWordCount);
+
+    $D.setStyle('small_matches_prefs', 'display', 'none');
+    $E.removeListener(window, 'scroll', repositionDialog);
+    document.getElementById('exclude_small_matches_link').focus();
+}
+
+function selectSmallExclusionMethod(enableType) {
+    if(enableType == 'words') {
+        $('exclude_by_words_value').focus();
+        
+        $D.addClass('exclude_by_words_row', 'selected');
+        $D.removeClass('exclude_by_percent_row', 'selected');
+        $D.removeClass('exclude_by_words_row', 'disabled');
+        $D.addClass('exclude_by_percent_row', 'disabled');
+    }
+    else {
+        $('exclude_by_percent_value').focus();
+        
+        $D.removeClass('exclude_by_words_row', 'selected');
+        $D.addClass('exclude_by_percent_row', 'selected');
+        $D.addClass('exclude_by_words_row', 'disabled');
+        $D.removeClass('exclude_by_percent_row', 'disabled');
+    }
+}
+
+function submitSmallMatchesChange() {
+    var excludeBy = $D.hasClass('exclude_by_percent_row', 'selected') ? 'percent' : 'words';
+    var excludeValue = excludeBy == 'percent' ? $('exclude_by_percent_value').value : $('exclude_by_words_value').value;
+    
+    changeSmallMatchExclusion(excludeBy, parseInt(excludeValue), 1246);
+}
+
+
+</script>
+<input type="hidden" name="changed" value="0">
+        <div class="pref_rows">
+                <label for="use_colors">color-code matches:</label>
+                <select id="use_colors" name="use_colors" onchange="document.prefs_form.changed.value=1">
+                    <option value="1">yes
+                    <option value="0">no
+                </select>
+                <div class="clear"></div>
+        </div>
+        <div class="pref_rows">
+                <label for="def_report_mode">default mode:</label>
+                <select id="def_report_mode" name="def_report_mode" onchange="document.prefs_form.changed.value=1">
+                    <option value="0">show highest matches together
+                    <option value="1">show matches one at a time
+                    <option value="2">quickview (classic) report
+                </select>
+                <div class="clear"></div>
+        </div>
+        <div class="pref_rows">
+                <label for="report_scrolling">auto-navigation:</label>
+                <select id="report_scrolling" name="report_scrolling" onchange="document.prefs_form.changed.value=1">
+                    <option value="0">jump to next match
+                    <option value="1">scroll to next match
+                </select>
+                <div class="clear"></div>
+        </div>
+        
+        <div id="prefs_confirm">
+            <button onClick="savePrefs()" >Save</button>  
+            <button onClick="hidePrefsPane();">Cancel</button>
+        </div>
+</form>
+</div>
+</div>
+</div>
+<!-- ########################### END Preferences pop-up  ##########################--> 
+
+<!-- ########################### BEGIN small matches pop-up  ##########################--> 
+<div id="small_matches_prefs" role="dialog" aria-labelledby="exclude_small_matches_link" aria-describedby="exclude_small_matches_link" aria-owns="exclude_small_matches_link">
+    <form onsubmit="submitSmallMatchesChange(); return false;">
+        <ul>
+            <li id="exclude_by_words_row" class="selected">
+                <label for="exclude_by_words_value">Word Count: </label>
+                <input type="text" id="exclude_by_words_value" size="3" value="" onkeyup="updateExcludePercentage"> words
+            </li>
+            <li id="exclude_by_percent_row" class="disabled">
+                <label for="exclude_by_percent_value">Percentage: </label>
+                <input type="text" id="exclude_by_percent_value" size="3" value="" max-length="3" onkeyup="updateExcludeWordCount"> %
+            </li>
+        </ul>
+        <p><input type='submit' value="submit"> or <button onclick="hideSmallMatchExclusions()">Cancel</button></p>
+    </form>
+</div>
+
+<!-- ########################### END small matches pop-up  ##########################-->
+
+<!-- ########################### Top of Report  ##########################--> 
+<div id="top">
+    <div id="content" role="banner">
+    
+        <!-- ######### Top Bar  ##########################--> 
+        <div id="top_bar">
+                <ul id="top_bar_list1">
+                      <!-- Preferences --><li><button id="prefs_link" onclick="showPrefsPane(); aria-haspopup="dialog">preferences</button></li>
+                </ul>
+                <ul id="top_bar_list2">
+                      
+                </ul>
+                <div class="clear"></div>
+        </div>   
+        <!-- ######### END Top Bar  ##########################--> 
+        
+        
+        <!-- ######### Top Body  ##########################--> 
+        <div id="top_body">
+        
+            <div id="print_wrapper">
+                <div class="general_info" role="region" aria-label="Paper Information">
+                    <!-- Logo --> 
+                    <h1>
+                        <span class=""></span>
+                        <strong>Turnitin</strong>
+                        <em>Originality Report</em>
+                     </h1>
+                 
+                     <!-- Paper Info -->               
+                     <ul>
+                         <li>Processed on: 23-Feb-2026 02:15 IST</li>
+                         <li>ID: 2885201016 </li>
+                         <li>Word Count: 1246</li>
+                         <li>Submitted: 1</li>
+                     </ul>
+                </div>
+
+                 <!-- Paper Title --> 
+                <h2>
+                    <strong>final_rep (1).pdf</strong> 
+                    
+                    <em>By Hari Sree M</em>
+                    
+                </h2>
+            </div>
+            
+            <div id="similarity_print_wrapper">
+                <div class="similarity_box" role="region" aria-labelledby="similarity_index_title" aria-describedby="similarity_index_title">
+                    <div class="overall_similarity">
+                        <div class="color_box green">&nbsp;</div>
+                        <div id="similarity_index_title" class="similarity_title">Similarity Index</div>
+                        <div class="similarity_percent">1%</div>
+                    </div>
+                    <div class="similarity_by_source" role="region" aria-labelledby="similarity_by_source_title" aria-describedby="similarity_by_source_title">
+                        <div id="similarity_by_source_title" class="similarity_title">Similarity by Source</div>
+                        <dl>
+                            <dt>Internet&nbsp;Sources:</dt>
+                            <dd>0%</dd>
+                            <div class="clear"></div>
+                            <dt>Publications:</dt>
+                            <dd>1%</dd>
+                            <div class="clear"></div>
+                            <dt>Student&nbsp;Papers:</dt>
+                            <dd>0%</dd>
+                            <div class="clear"></div>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+                                 
+        </div>
+        <!-- ######### END Top Body  ##########################--> 
+        
+        
+    </div>
+</div>
+<!-- ########################### END Top of Report  ##########################--> 
+
+
+
+<!-- ########################### TOOLBAR  ##########################--> 
+<div id="index">
+	<div id="toolbar_wrapper" role="toolbar">
+        
+	</div>
+</div>
+<!-- ########################### END TOOLBAR  ##########################--> 
+
+
+<div class="links" role="region" aria-label="Match Overview">
+    <div role="list">
+	<div role="listitem" aria-setsize="1" aria-posinset="1">
+	    <p>
+	        1% match ("Pattern Recognition", Springer Science and Business Media LLC, 2020)
+	    </p>
+        
+        
+ 
+	    <p><a href="javascript:openDSC(647015760,37,'0')" target="_blank" style="color:#D10A0A">"Pattern Recognition", Springer Science and Business Media LLC, 2020</a>
+
+    
+    </p>
+    </div></div></div></div><div id="body" tabIndex="0" role="main"><p>AMRITA VISHWA VIDYAPEETHAM SCHOOL OF COMPUTING DEPARTMENT OF COMPUTER SCIENCE AND ENGINEERING Motion Consistency Evaluation in Unmodified Surveillance Video Data 23CSE399 – Project Phase 1 (Panel Review 1) February 22, 2026 Team Members Guide Project Type Marks CB.SC.U4CSE23339 CB.SC.U4CSE23353 CB.SC.U4SCE23358 CB.SC.U4CSE23361 Nanditha C Krishna Veni Valluri Yartha Vinutha Harisree M Dr. N Lalithamani Dept. of CSE Research Based . . . / 5 1 Problem Definition & Originality Problem Statement: The video streams produced by surveillance camera systems are continuous, but in real- world applications, there are hidden problems in the video streams caused by environmental or hardware issues that result in low motion, frozen images, or irregular motion patterns. These problems do not necessarily cause traditional object-based alerts but can significantly affect the reliability of the video streams. The project aims to determine the motion consistency in the unaltered surveillance videos by examining the natural motion patterns in the videos. Originality Claim: Novel Idea • We propose a method for camera health assessment by exploring the temporal patterns of motion in video data. Unlike existing solutions that focus on object and event detection, our approach enables continuous and non-intrusive assessment of real-world surveillance data without the need for object detection or human annotation. 2 Literature Survey & Gap Analysis • Existing Solutions: Recent literature on surveillance video analysis and anomaly detection has lever- aged 3D CNNs, Transformers, and diffusion models. These methods typically focus on detecting behav- ioral anomalies (e.g., violence or theft) in urban and multi-camera environments. • Limitations: However, most systems assume stable video feeds and overlook signal-level impairments. While video quality assessment (VQA) and forgery detection (tampering/duplication) have matured, they are rarely integrated into a continuous camera health assessment framework. Current VAD methods often miss prolonged motion stagnation and lack security measures for heterogeneous video protocols. • Research Gap: Despite these advancements, there is no unified solution for assessing the tempo- ral motion consistency of raw feeds to determine real-time camera health. A critical gap exists for a non-intrusive, consistency-based evaluation that can distinguish between natural low activity and actual stream malfunctions without requiring object-level detection. 3 Proposed Methodology (Technical Knowledge) Core Concept: The proposed system introduces a Motion Consistency-Based Surveillance Feed Evaluation Framework. Instead of concentrating on the detection of unusual behavioral activities, the framework captures the normal process of motion in surveillance videos and verifies whether that motion is consistent. The process involves: • Spatio-temporal feature extraction from a sequence of video frames. • Motion representation modeling using frame difference and optical flow. • Temporal consistency scoring using a sliding time window. • Deviation detection to locate anomalies such as frozen frames, duplication, protracted motion stagnation, and temporal discontinuities. The final output is a Feed Reliability Score, which reveals the status and health of the surveillance feed. Figure 1: Proposed Methodology Architecture Mathematical / Logical Basis: The model is based on the measurement of inter-frame motion consistency. Let Ft be the video frame at time t, and Mt represent the motion between Ft and Ft−1. Motion is calculated as: Mt = ||Ft −Ft−1|| or Mt = ||Flow(Ft−1,Ft)|| (1) Step 1: Natural Motion Modeling: Statistical measu∑res are calculated over a sliding window: mean motion (µ), variance (σ2), and temporal smoothness constraints. Step 2: Consistency Evaluation: The motion consistency measure Ct is defined as: Ct = σwindow + ϵ |Mt − µwindow| (2) Anomaly detection follows specific rules: • Mt ≈ 0 for extended duration → Freeze suspicion. • Mt constant for long window → Frame duplication suspicion. • Sudden abnormal fluctuation → Temporal irregularity. Step 3: Feed Reliability Score: The final score R is calculated by summing consistency deviations: R = 1 − 1 T I(Ct > <img src="/r/build/images/new_dynamic/df3e567d6f16d040326c7a0ea29a4f41cb_spacer.gif" height="1" width="1" alt="Begin Match to source 1 in source list: "Pattern Recognition", Springer Science and Business Media LLC, 2020"><a href="javascript:void(0);" onClick="window.open('https://doi.org/10.1007/978-3-030-41299-9', 'context', 'location=no,menubar=no,resizable=yes,scrollbars=yes,titlebar=no,toolbar=no,status=no')" style="color:#D10A0A" class="#D10A0A">τ) (3) ∑ where τ is</a><img src="/r/build/images/new_dynamic/df3e567d6f16d040326c7a0ea29a4f41cb_spacer.gif" alt="End Match"> a predefined <img src="/r/build/images/new_dynamic/df3e567d6f16d040326c7a0ea29a4f41cb_spacer.gif" height="1" width="1" alt="Begin Match to source 1 in source list: "Pattern Recognition", Springer Science and Business Media LLC, 2020"><a href="javascript:void(0);" onClick="window.open('https://doi.org/10.1007/978-3-030-41299-9', 'context', 'location=no,menubar=no,resizable=yes,scrollbars=yes,titlebar=no,toolbar=no,status=no')" style="color:#D10A0A" class="#D10A0A">threshold</a><img src="/r/build/images/new_dynamic/df3e567d6f16d040326c7a0ea29a4f41cb_spacer.gif" alt="End Match"> and I(·) is the indicator function. 4 Current Status & Plan Status: Literature survey completed; Research gap identified; Conceptual model finalized; Architecture de- signed. Next Steps: Implementation of the motion extraction module (frame difference/optical flow); Development of a framework for temporal consistency analysis; Design and calculation of feed reliability score; Initial testing and threshold adjustment. References [1] G. Pang, H. Wang, J. Cheng, C. Zhang, H. Wang, and D. Doermann, “Video anomaly detection in 10 years: A survey and outlook,” IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI), 2024, arXiv preprint arXiv:2404.16480. [2] B. R. Kiran, D. M. Thomas, and R. Parakkal, “An overview of deep learning based methods for unsuper- vised and semi-supervised anomaly detection in videos,” ArXiv preprint arXiv:1801.03149, 2018. [3] X. dong Bi, X. He, S. Xiong, Z. Zhao, H. Chen, and R. E. Sheriff, “Blind video quality assessment based on spatio-temporal feature resolver,” Neurocomputing, vol. 575, p. 127264, 2024. [4] H. Liu et al., “Advancing video anomaly detection: A concise review and a new dataset,” in Advances in Neural Information Processing Systems (NeurIPS), 2024. [5] B. R. Ramachandra, M. J. Jones, and R. Radhakrishnan, “A survey of single-scene video anomaly detec- tion,” IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI), vol. 44, pp. 2293–2312, 2020. [6] A. Nayyar et al., “Deep learning-based anomaly detection in video surveillance: A survey,” Electronics, vol. 10, no. 22, p. 2873, 2021. [7] L. Li, J. Lu, S. Zhang, L. Mohaisen, and M. Emam, “Frame duplication forgery detection in surveillance video sequences using textural features,” Electronics, vol. 12, no. 22, p. 4597, 2023. [8] S. B. Veesam, B. T. Rao, Z. Begum, R. S. M. L. Patibandla, A. A. Dcosta, S. Bansal, K. Prakash, M. R. I. Faruque, and K. S. Al-Mugren, “Multi-camera spatiotemporal deep learning framework for real-time abnormal behavior detection in dense urban environments,” Scientific Reports, vol. 15, no. 1, p. 26813, 2025. [9] G. Mittag, B. Naderi, V. Gopal, and R. Cutler, “Lstm-based video quality prediction accounting for temporal distortions in videoconferencing calls,” arXiv preprint arXiv:2303.12761, 2023. [10] N. Akhtar, M. Hussain, and Z. Habib, “Two–stage detection and localization of inter–frame tampering in surveillance videos using texture and optical flow,” Mathematics, vol. 12, no. 22, p. 3482, 2024. [11] W. Liu, W. Luo, D. Lian, and S. Gao, “Future frame prediction for anomaly detection – a new baseline,” 2018. [12] X. Zhang et al., “Anomaly detection method of surveillance video based on global-local information,” ResearchGate, 2023. [13] K. Lee, K. Yim, and M. A. Mikki, “A secure framework of the surveillance video network integrating heterogeneous video formats and protocols,” Computers and Mathematics with Applications, vol. 63, pp. 525–535, 2012. [14] M. P. Priya and K. UlagaPriya, “Video prediction based on temporal aggregation and recurrent propaga- tion for surveillance videos,” ResearchGate, 2025. [15] S. Hussain et al., “Engineering a multi-sensor surveillance system with secure alerting for next-generation threat detection and response,” Scientific Reports / NIH, 2024. [16] B. Liu et al., “Surveillancevqa-589k: A benchmark for comprehensive surveillance video-language un- derstanding with large models,” arXiv preprint arXiv:2505.12589, 2025. [17] W. Kaddah et al., “Deep-sta: Deep learning-based detection and localization of various types of inter- frame video tampering using spatiotemporal analysis,” Electronics, 2022. [18] S. Ali et al., “Robust motion detection and classification in real-life scenarios using motion vectors,” PLOS ONE, 2023. [19] X. dong Bi et al., “Blind video quality assessment based on spatio-temporal feature resolver,” Neurocom- puting, 2024. [20] Y. Zhang et al., “Video quality assessment with texture information fusion for streaming applications,” arXiv preprint arXiv:2407.01234, 2024. [21] J. Wang et al., “Frame shuffling forgery detection method for mpeg-coded video,” IEEE Access, 2023. [22] S. Sarker et al., “Proactive anomaly surveillance system for cctv footage analysis in adverse environmen- tal conditions,” Scientific Reports, 2024. [23] J. Vora et al., “Securecam: Selective detection and encryption enabled application for dynamic camera surveillance videos,” IEEE Internet of Things Journal, 2023. </p></div></body></html>
