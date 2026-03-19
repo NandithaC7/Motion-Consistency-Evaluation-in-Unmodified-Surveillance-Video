@@ -1,0 +1,68 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+dist/
+build/
+.env
+venv/
+.env/
+*.log
+
+# =========================
+# Jupyter (if used)
+# =========================
+.ipynb_checkpoints/
+
+# =========================
+# MacOS (you are on Mac)
+# =========================
+.DS_Store
+
+# =========================
+# VS Code
+# =========================
+.vscode/
+
+# =========================
+# Dataset / Videos
+# =========================
+*.mp4
+*.avi
+*.mov
+*.mkv
+dataset/
+data/
+
+# (IMPORTANT: you don’t upload large videos to GitHub)
+
+# =========================
+# Results / Generated files
+# =========================
+results/*.png
+results/*.jpg
+results/*.csv
+
+# (optional: keep if you want to show outputs)
+
+# =========================
+# LaTeX / Overleaf junk
+# =========================
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+
+# =========================
+# OS / temp files
+# =========================
+*.tmp
+*.swp
