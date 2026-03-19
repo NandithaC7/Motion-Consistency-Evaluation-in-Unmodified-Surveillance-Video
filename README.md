@@ -115,3 +115,13 @@ ShanghaiTech Campus Surveillance Dataset
 * Improving our methodology
 * Finalizing model that is to be implemented
 
+## Team
+Nanditha C
+Harisree M
+Yartha Vinutha
+Krishna Veni Valluri
+
+## Guide
+Dr. N Lalithamani
+Department of Computer Science and Engineering
+Amrita School of Computing
