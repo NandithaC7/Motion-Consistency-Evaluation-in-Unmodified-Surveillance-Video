@@ -99,7 +99,7 @@ ShanghaiTech Campus Surveillance Dataset
 * `experiments/` – motion extraction and analysis scripts
 * `results/` – generated outputs and observations
 * `literature/` – paper summaries and comparisons
-* `report/` – project documentation
+* `documentation/` – project documentation
 
 ---
 
@@ -108,5 +108,10 @@ ShanghaiTech Campus Surveillance Dataset
 * Literature survey completed
 * Research gap identified
 * Conceptual model and architecture defined
-* Initial motion analysis
+
+## In Progress (Phase 1)
+
+* Initial motion analysis experiments in progress
+* Improving our methodology
+* Finalizing model that is to be implemented
 
