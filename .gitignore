@@ -1,0 +1,19 @@
+# Large dataset files — do not commit
+AIC21-Track4-Anomaly-Detection/
+processed_output/*.npy
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Virtual environments
+venv/
+env/
+.env/
+
+# OS files
+.DS_Store
+Thumbs.db
