@@ -1,0 +1,9 @@
+{
+  "train_clip_count": 184,
+  "test_clip_count": 0,
+  "stream_a_model": "Data_set\\processed_output\\stage23\\stream_a_autoencoder.pkl",
+  "stream_b_model": "Data_set\\processed_output\\stage23\\stream_b_autoencoder.pkl",
+  "train_loss_a_final": 1.2032230917722372e-14,
+  "train_loss_b_final": 1.2227576197117e-14,
+  "output_dir": "Data_set\\processed_output\\stage23"
+}

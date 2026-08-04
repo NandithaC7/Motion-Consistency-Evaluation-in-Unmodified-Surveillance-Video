@@ -174,6 +174,62 @@ AICity21-Track4-Anomaly-Detection/
 
 ---
 
+### Stage 2 and Stage 3 for the Current Dataset
+
+The repository already includes the saved motion streams in:
+
+- `Data_set/processed_output/1_stream_A_frame_diff.npy`
+- `Data_set/processed_output/1_stream_B_optical_flow.npy`
+
+Use these directly for Stage 2 clip building and Stage 3 model training.
+
+#### Run
+
+```bash
+python Data_set/stage2_stage3_pipeline.py
+```
+
+#### What it does
+
+- loads the provided Stream A and Stream B arrays if they exist
+- treats each `(16, H, W)` slice as one clip
+- trains two LSTM autoencoders, one per stream
+- saves the trained models, scalers, and reconstruction scores under:
+
+```text
+Data_set/processed_output/stage23/
+```
+
+#### Output files
+
+- `stream_a_lstm_autoencoder.keras`
+- `stream_b_lstm_autoencoder.keras`
+- `stream_a_autoencoder.pkl`
+- `stream_b_autoencoder.pkl`
+- `stream_a_scaler.pkl`
+- `stream_b_scaler.pkl`
+- `train_reconstruction_scores.csv`
+- `test_reconstruction_scores.csv`
+- `run_summary.json`
+
+#### If you want to rebuild clips from images instead
+
+Point the script at a folder containing preprocessed frame images and pass `--data_root`.
+If the folder has fewer than 16 frames per sequence, use `--demo_pad_short_sequences` only for a demo run.
+
+---
+
+### What To Do After Stage 3
+
+After training the two autoencoders, the next stage is to:
+
+1. Compare Stream A and Stream B reconstruction errors.
+2. Compute the divergence score from the two errors.
+3. Apply the rolling threshold to label clips as `Healthy`, `Irregular`, or `Frozen`.
+4. Export a results table and plots for your report.
+
+---
+
 ### Tech Stack
 
 - Python 3.11
