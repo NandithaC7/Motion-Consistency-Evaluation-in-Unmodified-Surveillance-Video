@@ -454,15 +454,52 @@ def run_stage23(
     train_err_a = model_a.reconstruction_error(train_a_scaled)
     train_err_b = model_b.reconstruction_error(train_b_scaled)
 
+    # ── Stage 4: Divergence Anomaly Score ──────────────────────────────────────
+    # Score_i = e_A + e_B + \lambda |e_A - e_B|
+    lambda_param = 1.0
+    divergence_scores = train_err_a + train_err_b + lambda_param * np.abs(train_err_a - train_err_b)
+
+    # ── Stage 5: Dual-Window Adaptive Threshold ────────────────────────────────
+    # \theta = min(\mu_s + 2\sigma_s, \mu_l + 2\sigma_l)
+    N_clips = len(train_clips)
+    adaptive_thresholds = np.zeros(N_clips, dtype=np.float32)
+    for i in range(N_clips):
+        sw = divergence_scores[max(0, i - 19) : i + 1]
+        lw = divergence_scores[max(0, i - 99) : i + 1]
+        theta_s = float(np.mean(sw) + 2.0 * np.std(sw))
+        theta_l = float(np.mean(lw) + 2.0 * np.std(lw))
+        adaptive_thresholds[i] = min(theta_s, theta_l)
+
+    # ── Stage 6: Classification & Feed Reliability Score R ─────────────────────
+    classifications = []
+    unhealthy_count = 0
+    for clip, score, thresh in zip(train_clips, divergence_scores, adaptive_thresholds):
+        g_status = clip.get("status", "PASS")
+        if g_status == "FROZEN":
+            cls_name = "FROZEN"
+            unhealthy_count += 1
+        elif score > thresh:
+            cls_name = "IRREGULAR"
+            unhealthy_count += 1
+        else:
+            cls_name = "HEALTHY"
+        classifications.append(cls_name)
+
+    reliability_score_R = float(1.0 - (unhealthy_count / N_clips)) if N_clips > 0 else 1.0
+
     train_rows = []
-    for clip, err_a, err_b in zip(train_clips, train_err_a, train_err_b):
+    for clip, err_a, err_b, score, thresh, cls_name in zip(
+        train_clips, train_err_a, train_err_b, divergence_scores, adaptive_thresholds, classifications
+    ):
         train_rows.append(
             {
                 "clip_id": clip["clip_id"],
                 "sequence_name": clip["sequence_name"],
                 "stream_a_error": float(err_a),
                 "stream_b_error": float(err_b),
-                "mean_reconstruction_error": float((err_a + err_b) / 2.0),
+                "divergence_score": float(score),
+                "adaptive_threshold": float(thresh),
+                "classification": cls_name,
             }
         )
 
@@ -472,14 +509,16 @@ def run_stage23(
         test_b = _transform_streams(motion_sequences_from_clips(test_clips, "stream_b"), scaler_b)
         test_err_a = model_a.reconstruction_error(test_a)
         test_err_b = model_b.reconstruction_error(test_b)
-        for clip, err_a, err_b in zip(test_clips, test_err_a, test_err_b):
+        test_div_scores = test_err_a + test_err_b + lambda_param * np.abs(test_err_a - test_err_b)
+        for clip, err_a, err_b, score in zip(test_clips, test_err_a, test_err_b, test_div_scores):
             test_rows.append(
                 {
                     "clip_id": clip["clip_id"],
                     "sequence_name": clip["sequence_name"],
                     "stream_a_error": float(err_a),
                     "stream_b_error": float(err_b),
-                    "mean_reconstruction_error": float((err_a + err_b) / 2.0),
+                    "divergence_score": float(score),
+                    "classification": "IRREGULAR" if score > float(np.mean(adaptive_thresholds)) else "HEALTHY",
                 }
             )
 
@@ -503,7 +542,22 @@ def run_stage23(
         "stream_b_model": str(model_b_path),
         "train_loss_a_final": float(history_a.history["loss"][-1]),
         "train_loss_b_final": float(history_b.history["loss"][-1]),
+        "feed_reliability_score_R": round(reliability_score_R, 4),
+        "classification_counts": {
+            "HEALTHY": classifications.count("HEALTHY"),
+            "IRREGULAR": classifications.count("IRREGULAR"),
+            "FROZEN": classifications.count("FROZEN"),
+        },
         "output_dir": str(output_path),
+    }
+
+    with open(output_path / "run_summary.json", "w", encoding="utf-8") as handle:
+        json.dump(summary, handle, indent=2)
+
+    return {
+        "summary": summary,
+        "train_scores": train_rows,
+        "test_scores": test_rows,
     }
 
     with open(output_path / "run_summary.json", "w", encoding="utf-8") as handle:
