@@ -1,9 +1,22 @@
 {
-  "train_clip_count": 184,
-  "test_clip_count": 0,
-  "stream_a_model": "Data_set\\processed_output\\stage23\\stream_a_autoencoder.pkl",
-  "stream_b_model": "Data_set\\processed_output\\stage23\\stream_b_autoencoder.pkl",
-  "train_loss_a_final": 1.2032230917722372e-14,
-  "train_loss_b_final": 1.2227576197117e-14,
-  "output_dir": "Data_set\\processed_output\\stage23"
+  "dataset_clips": 184,
+  "sequence_len": 16,
+  "feature_dim": 4096,
+  "epochs": 30,
+  "hidden_dim": 64,
+  "is_pytorch": true,
+  "stream_a_final_loss": 0.0008733244738667398,
+  "stream_b_final_loss": 0.03151275237669816,
+  "optimal_lambda": 2.0,
+  "feed_reliability_score_R": 0.962,
+  "class_counts": {
+    "HEALTHY": 177,
+    "IRREGULAR": 7,
+    "FROZEN": 0
+  },
+  "models_saved": {
+    "stream_a": "C:\\github_ahara\\final_year\\Motion-Consistency-Evaluation-in-Unmodified-Surveillance-Video\\Data_set\\processed_output\\stage23\\stream_a_lstm_ae.pt",
+    "stream_b": "C:\\github_ahara\\final_year\\Motion-Consistency-Evaluation-in-Unmodified-Surveillance-Video\\Data_set\\processed_output\\stage23\\stream_b_lstm_ae.pt"
+  },
+  "output_dir": "C:\\github_ahara\\final_year\\Motion-Consistency-Evaluation-in-Unmodified-Surveillance-Video\\Data_set\\processed_output\\stage23"
 }

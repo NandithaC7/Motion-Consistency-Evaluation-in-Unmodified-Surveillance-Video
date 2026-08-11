@@ -18,8 +18,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
+from pathlib import Path
+
 # ── Paths ─────────────────────────────────────────────────────────────────────
-OUTPUT_DIR   = r"D:\AICity21-Track4-Anomaly-Detection\processed_output"
+OUTPUT_DIR   = str(Path(__file__).parent / "processed_output")
 PATH_A       = os.path.join(OUTPUT_DIR, "1_stream_A_frame_diff.npy")
 PATH_B       = os.path.join(OUTPUT_DIR, "1_stream_B_optical_flow.npy")
 

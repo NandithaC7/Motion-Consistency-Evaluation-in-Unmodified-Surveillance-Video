@@ -25,11 +25,25 @@ import csv
 import json
 import pickle
 import re
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 import numpy as np
+
+# Ensure project root is in sys.path so 'src' can be imported
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from src.models.lstm_autoencoder import DualStreamLSTMAutoencoder
+from src.evaluation.anomaly_scorer import (
+    compute_divergence_anomaly_score,
+    grid_search_lambda,
+    DualWindowAdaptiveThreshold,
+    classify_clips_and_compute_reliability,
+)
 
 
 IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".bmp"}
@@ -275,68 +289,6 @@ def _flatten_sequences(sequences: np.ndarray) -> np.ndarray:
     return sequences.reshape(sequences.shape[0], -1)
 
 
-class DualLSTMAutoencoder:
-    def __init__(self, input_shape: Tuple[int, int] = (16, 1), latent_units: int = 64):
-        self.input_shape = input_shape
-        self.latent_units = latent_units
-        self.mean_: Optional[np.ndarray] = None
-        self.components_: Optional[np.ndarray] = None
-
-    def fit(
-        self,
-        train_sequences: np.ndarray,
-        epochs: int = 30,
-        batch_size: int = 16,
-        validation_split: float = 0.2,
-        patience: int = 5,
-    ):
-        if train_sequences.ndim < 2:
-            raise ValueError("Expected train_sequences with shape (N, ...)")
-
-        flat_sequences = _flatten_sequences(train_sequences).astype(np.float32)
-        if len(flat_sequences) < 2:
-            raise ValueError("Need at least 2 clips to train the autoencoder.")
-
-        validation_size = max(1, int(round(len(flat_sequences) * validation_split)))
-        if validation_size >= len(flat_sequences):
-            validation_size = 1
-
-        train_x = flat_sequences[:-validation_size]
-        val_x = flat_sequences[-validation_size:]
-
-        self.mean_ = train_x.mean(axis=0)
-        centered = train_x - self.mean_
-        _, _, vt = np.linalg.svd(centered, full_matrices=False)
-        latent_dim = max(1, min(self.latent_units, vt.shape[0]))
-        self.components_ = vt[:latent_dim]
-
-        train_pred = self.reconstruct(train_x)
-        val_pred = self.reconstruct(val_x)
-        train_loss = float(np.mean(np.square(train_x - train_pred)))
-        val_loss = float(np.mean(np.square(val_x - val_pred)))
-        return TrainingHistory(history={"loss": [train_loss], "val_loss": [val_loss]})
-
-    def reconstruct(self, sequences: np.ndarray) -> np.ndarray:
-        if self.mean_ is None or self.components_ is None:
-            raise RuntimeError("Model has not been trained yet.")
-        flat_sequences = _flatten_sequences(sequences).astype(np.float32)
-        centered = flat_sequences - self.mean_
-        latent = centered @ self.components_.T
-        reconstructed = latent @ self.components_ + self.mean_
-        return reconstructed.reshape(sequences.shape)
-
-    def reconstruction_error(self, sequences: np.ndarray) -> np.ndarray:
-        reconstructed = self.reconstruct(sequences)
-        squared_error = np.square(sequences - reconstructed)
-        return np.mean(squared_error, axis=tuple(range(1, squared_error.ndim)))
-
-    def save(self, path: str | Path):
-        if self.mean_ is None or self.components_ is None:
-            raise RuntimeError("Model has not been trained yet.")
-        with open(path, "wb") as handle:
-            pickle.dump({"mean_": self.mean_, "components_": self.components_}, handle)
-
-
 def get_valid_clips(clips: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     return [clip for clip in clips if clip.get("status") == "PASS"]
 
@@ -445,14 +397,14 @@ def run_stage23(
     train_a_scaled = _transform_streams(train_a, scaler_a)
     train_b_scaled = _transform_streams(train_b, scaler_b)
 
-    model_a = DualLSTMAutoencoder(input_shape=train_a_scaled.shape[1:], latent_units=latent_units)
-    model_b = DualLSTMAutoencoder(input_shape=train_b_scaled.shape[1:], latent_units=latent_units)
+    model_a = DualStreamLSTMAutoencoder(seq_len=16, input_dim=train_a.shape[-1] if train_a.ndim > 2 else 1, hidden_dim=latent_units)
+    model_b = DualStreamLSTMAutoencoder(seq_len=16, input_dim=train_b.shape[-1] if train_b.ndim > 2 else 1, hidden_dim=latent_units)
 
-    history_a = model_a.fit(train_a_scaled, epochs=epochs, batch_size=batch_size)
-    history_b = model_b.fit(train_b_scaled, epochs=epochs, batch_size=batch_size)
+    history_a = model_a.fit(train_a, epochs=epochs, batch_size=batch_size)
+    history_b = model_b.fit(train_b, epochs=epochs, batch_size=batch_size)
 
-    train_err_a = model_a.reconstruction_error(train_a_scaled)
-    train_err_b = model_b.reconstruction_error(train_b_scaled)
+    train_err_a = model_a.reconstruction_error(train_a)
+    train_err_b = model_b.reconstruction_error(train_b)
 
     # ── Stage 4: Divergence Anomaly Score ──────────────────────────────────────
     # Score_i = e_A + e_B + \lambda |e_A - e_B|
@@ -549,15 +501,6 @@ def run_stage23(
             "FROZEN": classifications.count("FROZEN"),
         },
         "output_dir": str(output_path),
-    }
-
-    with open(output_path / "run_summary.json", "w", encoding="utf-8") as handle:
-        json.dump(summary, handle, indent=2)
-
-    return {
-        "summary": summary,
-        "train_scores": train_rows,
-        "test_scores": test_rows,
     }
 
     with open(output_path / "run_summary.json", "w", encoding="utf-8") as handle:

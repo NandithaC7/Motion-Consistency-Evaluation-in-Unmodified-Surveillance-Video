@@ -94,7 +94,7 @@ class PipelineConfig:
         self.frame_skip          : int   = 1           # 1 = no skipping
         self.max_frames          : Optional[int] = None
         self.debug_mode          : bool  = False
-        self.debug_output_dir    : str   = r"D:\AICity21-Track4-Anomaly-Detection\processed_output"
+        self.debug_output_dir    : str   = str(Path(__file__).parent / "processed_output")
 
 
 # =============================================================================
