@@ -1,26 +1,26 @@
-"""
+r"""
 anomaly_scorer.py
 ------------------
 Stages 4, 5, & 6: Divergence Anomaly Scoring, Adaptive Thresholding, and Feed Reliability Score.
 Project: Motion Consistency Evaluation in Unmodified Surveillance Video
 
 Stage 4 - Divergence Anomaly Score (Novel Contribution):
-    Score_i = e_A + e_B + \lambda |e_A - e_B|
+    Score_i = e_A + e_B + lambda * |e_A - e_B|
     Measures reconstruction error between Stream A (Frame Diff) and Stream B (Optical Flow).
-    The divergence term \lambda |e_A - e_B| catches single-stream failure modes.
+    The divergence term lambda * |e_A - e_B| catches single-stream failure modes.
 
 Stage 5 - Dual-Window Adaptive Thresholding:
-    Short window (N_s = 20):  \theta_s = \mu_s + 2\sigma_s (detects sudden faults)
-    Long window (N_l = 100):  \theta_l = \mu_l + 2\sigma_l (detects gradual drift)
-    Adaptive threshold:       \theta = min(\theta_s, \theta_l)
+    Short window (N_s = 20):  theta_s = mu_s + 2*sigma_s (detects sudden faults)
+    Long window (N_l = 100):  theta_l = mu_l + 2*sigma_l (detects gradual drift)
+    Adaptive threshold:       theta = min(theta_s, theta_l)
 
 Stage 6 - Classification Rule & Feed Reliability Score:
     Classification Rule:
         Class_i = FROZEN    if Guard G1 or G2 triggered
-        Class_i = IRREGULAR if Score_i > \theta
+        Class_i = IRREGULAR if Score_i > theta
         Class_i = HEALTHY   otherwise
     Feed Reliability Score:
-        R = 1 - (1 / N) * sum(Class_i != HEALTHY) \in [0, 1]
+        R = 1 - (1 / N) * sum(Class_i != HEALTHY), R in [0, 1]
 """
 
 from __future__ import annotations
@@ -48,13 +48,60 @@ def compute_divergence_anomaly_score(
 ) -> Union[float, np.ndarray]:
     """
     Compute Stage 4 Divergence Anomaly Score:
-    Score_i = e_A + e_B + \lambda |e_A - e_B|
+    Score_i = e_A + e_B + lambda * |e_A - e_B|
     """
     error_a = np.asarray(error_a, dtype=np.float32)
     error_b = np.asarray(error_b, dtype=np.float32)
     divergence_term = lambda_param * np.abs(error_a - error_b)
     score = error_a + error_b + divergence_term
     return score
+
+
+def grid_search_lambda(
+    error_a: np.ndarray,
+    error_b: np.ndarray,
+    candidate_lambdas: List[float] = [0.1, 0.5, 1.0, 2.0]
+) -> Dict[str, Any]:
+    """
+    Stage 4 Hyperparameter Grid Search:
+    Evaluates candidate lambda parameters in {0.1, 0.5, 1.0, 2.0} for optimal stream divergence weighting.
+    Returns dictionary with best lambda, per-lambda score metrics, and divergence statistics.
+    """
+    error_a = np.asarray(error_a, dtype=np.float32)
+    error_b = np.asarray(error_b, dtype=np.float32)
+    abs_diff = np.abs(error_a - error_b)
+    sum_err = error_a + error_b
+
+    results = {}
+    best_lambda = candidate_lambdas[0]
+    best_variance_ratio = -1.0
+
+    for lam in candidate_lambdas:
+        scores = sum_err + lam * abs_diff
+        mean_score = float(np.mean(scores))
+        std_score = float(np.std(scores))
+        mean_div = float(np.mean(lam * abs_diff))
+        # Measure how strongly divergence separates variation
+        var_ratio = float(std_score / (mean_score + 1e-8))
+
+        results[float(lam)] = {
+            "lambda": float(lam),
+            "mean_score": mean_score,
+            "std_score": std_score,
+            "mean_divergence_term": mean_div,
+            "variance_ratio": var_ratio,
+            "scores": scores,
+        }
+
+        if var_ratio > best_variance_ratio:
+            best_variance_ratio = var_ratio
+            best_lambda = float(lam)
+
+    return {
+        "best_lambda": best_lambda,
+        "grid_results": results,
+        "candidate_lambdas": candidate_lambdas,
+    }
 
 
 class DualWindowAdaptiveThreshold:
@@ -104,7 +151,7 @@ def classify_clips_and_compute_reliability(
 ) -> Tuple[List[str], float, Dict[str, Any]]:
     """
     Stage 6: Classify each clip as FROZEN, IRREGULAR, or HEALTHY,
-    and compute the overall Feed Reliability Score R \in [0, 1].
+    and compute the overall Feed Reliability Score R in [0, 1].
 
     Returns:
         (classifications, reliability_score_R, summary_dict)
