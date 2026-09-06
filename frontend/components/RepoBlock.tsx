@@ -30,9 +30,6 @@ export function RepoBlock() {
             {SITE.githubName}
           </h3>
           <p className="mt-3 max-w-xl text-[16px] text-muted">
-            Source for the dual-stream LSTM autoencoder, guard layers, and
-            evaluation scripts. The website in <code>frontend/</code> is the
-            presentation and documentation portal.
           </p>
         </div>
         <div className="col-span-12 lg:col-span-4 mt-6 lg:mt-0 flex lg:justify-end">

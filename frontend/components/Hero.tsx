@@ -11,7 +11,7 @@ export function Hero() {
           <div className="col-span-12 lg:col-span-5 flex flex-col justify-start pt-16 pb-14 md:pt-20 md:pb-20 lg:pr-6">
             <FadeIn>
               <p className="type-label mb-6">
-                Final Year Project · {SITE.year}
+                Final Year Project
               </p>
               <div className="rule-accent mb-8" />
               <h1 className="type-hero">

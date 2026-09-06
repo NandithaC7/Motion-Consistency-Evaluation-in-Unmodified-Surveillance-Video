@@ -6,7 +6,7 @@ export const SITE = {
   university: "Amrita School of Engineering, Amrita Vishwa Vidyapeetham",
   department: "Department of Computer Science and Engineering",
   campus: "Coimbatore, Tamil Nadu",
-  course: "23CSE399 — Project Phase 1",
+  course: "Project Phase 2",
   year: "2025–2026",
   github:
     "https://github.com/NandithaC7/Motion-Consistency-Evaluation-in-Unmodified-Surveillance-Video",
@@ -24,10 +24,10 @@ export const NAV_LINKS = [
 ] as const;
 
 export const TEAM = [
-  { name: "Nanditha Chintakrinda", role: "Research Lead · Model Architecture" },
-  { name: "Valluri Krishnaveni", role: "Evaluation · Scoring Pipeline" },
+  { name: "Nanditha Chintakrinda", role: "Research Survey · Scoring Pipeline" },
+  { name: "Valluri Krishnaveni", role: "Preprocessing · Documentation" },
   { name: "Yartha Vinutha", role: "Preprocessing · Motion Streams" },
-  { name: "Hari Sree M", role: "Experiments · Documentation" },
+  { name: "Hari Sree M", role: "Evaluation · Motion Streams" },
 ] as const;
 
 export const SPECS = [
@@ -96,17 +96,17 @@ export const FULL_PIPELINE = [
 export const HIGHLIGHTS = [
   {
     title: "Efficient",
-    lead: "Real-time ready",
+    //lead: "Real-time ready",
     body: "Guard layers exit early on frozen feeds so the dual-stream model only runs when temporal analysis is required.",
   },
   {
     title: "Non-destructive",
-    lead: "Original footage preserved",
+    //lead: "Original footage preserved",
     body: "The pipeline never writes back into the source video. Evaluation is observational, which is required for forensic and academic use.",
   },
   {
     title: "Temporal",
-    lead: "Motion consistency evaluated",
+    //lead: "Motion consistency evaluated",
     body: "Consecutive frames are read as a process. Inconsistencies appear as reconstruction and cross-stream disagreement, not as objects.",
   },
 ] as const;
@@ -126,11 +126,11 @@ export const PROGRESS = [
 ];
 
 export const TIMELINE = [
-  { month: "August", activity: "Planning & Literature Review" },
-  { month: "September", activity: "Data Collection & Preprocessing" },
-  { month: "October", activity: "Model Development" },
-  { month: "November", activity: "Evaluation & Documentation" },
-  { month: "Final", activity: "Demo & Submission" },
+  { month: "April", activity: "Planning & Literature Review" },
+  { month: "May-June", activity: "Data Collection & Preprocessing" },
+  { month: "July-August", activity: "Model Development" },
+  { month: "September(Ongoing)", activity: "Evaluation & Documentation" },
+  { month: "(Yet to be done)", activity: "Demo & Submission" },
 ] as const;
 
 export const DOC_SECTIONS = [
