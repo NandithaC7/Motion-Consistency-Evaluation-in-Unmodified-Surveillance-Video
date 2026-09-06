@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" fill="none">
+  <rect width="640" height="400" fill="#FFFFFF"/>
+  <g stroke="#2E7D32" stroke-width="1">
+    <path d="M40 80 l28 6"/>
+    <path d="M90 110 l32 -4"/>
+    <path d="M150 140 l36 8"/>
+    <path d="M210 170 l28 12"/>
+    <path d="M270 190 l40 2"/>
+    <path d="M330 200 l36 -6"/>
+    <path d="M390 188 l30 10"/>
+    <path d="M450 210 l34 4"/>
+    <path d="M510 230 l26 8"/>
+    <path d="M70 220 l24 10"/>
+    <path d="M130 250 l30 6"/>
+    <path d="M200 270 l28 2"/>
+    <path d="M280 280 l36 -8"/>
+    <path d="M360 268 l32 4"/>
+    <path d="M440 290 l28 6"/>
+    <path d="M520 300 l22 4"/>
+    <path d="M80 320 l20 2"/>
+    <path d="M160 330 l26 -4"/>
+    <path d="M240 340 l24 2"/>
+    <path d="M320 336 l30 -6"/>
+    <path d="M410 348 l22 2"/>
+    <path d="M490 352 l18 4"/>
+    <path d="M60 160 l18 -10"/>
+    <path d="M180 90 l22 8"/>
+    <path d="M300 70 l16 12"/>
+    <path d="M420 96 l20 6"/>
+    <path d="M540 120 l16 10"/>
+  </g>
+  <g stroke="#111111" stroke-width="1" opacity="0.35">
+    <path d="M0 300 H640"/>
+    <path d="M40 300 L140 120 H500 L600 300"/>
+  </g>
+  <text x="24" y="28" fill="#6B7280" font-family="Inter, sans-serif" font-size="12" letter-spacing="1.6">STREAM B · OPTICAL FLOW</text>
+</svg>
