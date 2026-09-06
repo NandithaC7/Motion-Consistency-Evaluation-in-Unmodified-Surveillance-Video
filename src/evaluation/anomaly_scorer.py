@@ -44,23 +44,37 @@ class AnomalyEvaluationResult:
 def compute_divergence_anomaly_score(
     error_a: Union[float, np.ndarray],
     error_b: Union[float, np.ndarray],
-    lambda_param: float = 1.0
+    lambda_param: float = 1.0,
+    norm_params: Optional[Dict[str, float]] = None
 ) -> Union[float, np.ndarray]:
     """
     Compute Stage 4 Divergence Anomaly Score:
-    Score_i = e_A + e_B + lambda * |e_A - e_B|
+    Score_i = z_A + z_B + lambda * |z_A - z_B| (if normalized)
+    otherwise e_A + e_B + lambda * |e_A - e_B|
     """
     error_a = np.asarray(error_a, dtype=np.float32)
     error_b = np.asarray(error_b, dtype=np.float32)
-    divergence_term = lambda_param * np.abs(error_a - error_b)
-    score = error_a + error_b + divergence_term
+
+    if norm_params is not None:
+        mu_a = norm_params.get("mu_a", 0.0)
+        std_a = norm_params.get("std_a", 1.0)
+        mu_b = norm_params.get("mu_b", 0.0)
+        std_b = norm_params.get("std_b", 1.0)
+        z_a = (error_a - mu_a) / (std_a + 1e-8)
+        z_b = (error_b - mu_b) / (std_b + 1e-8)
+        divergence_term = lambda_param * np.abs(z_a - z_b)
+        score = z_a + z_b + divergence_term
+    else:
+        divergence_term = lambda_param * np.abs(error_a - error_b)
+        score = error_a + error_b + divergence_term
     return score
 
 
 def grid_search_lambda(
     error_a: np.ndarray,
     error_b: np.ndarray,
-    candidate_lambdas: List[float] = [0.1, 0.5, 1.0, 2.0]
+    candidate_lambdas: List[float] = [0.1, 0.5, 1.0, 2.0],
+    norm_params: Optional[Dict[str, float]] = None
 ) -> Dict[str, Any]:
     """
     Stage 4 Hyperparameter Grid Search:
@@ -69,8 +83,19 @@ def grid_search_lambda(
     """
     error_a = np.asarray(error_a, dtype=np.float32)
     error_b = np.asarray(error_b, dtype=np.float32)
-    abs_diff = np.abs(error_a - error_b)
-    sum_err = error_a + error_b
+
+    if norm_params is not None:
+        mu_a = norm_params.get("mu_a", 0.0)
+        std_a = norm_params.get("std_a", 1.0)
+        mu_b = norm_params.get("mu_b", 0.0)
+        std_b = norm_params.get("std_b", 1.0)
+        z_a = (error_a - mu_a) / (std_a + 1e-8)
+        z_b = (error_b - mu_b) / (std_b + 1e-8)
+        abs_diff = np.abs(z_a - z_b)
+        sum_err = z_a + z_b
+    else:
+        abs_diff = np.abs(error_a - error_b)
+        sum_err = error_a + error_b
 
     results = {}
     best_lambda = candidate_lambdas[0]

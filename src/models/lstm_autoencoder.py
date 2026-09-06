@@ -118,12 +118,16 @@ if TRY_TORCH and torch is not None:
 
         def get_reconstruction_error(self, x: torch.Tensor) -> torch.Tensor:
             """
-            Compute MSE reconstruction error per clip:
-            e_i = (1 / (T * D)) * sum_{t,d} (x_{t,d} - hat{x}_{t,d})^2
+            Compute joint MSE + temporal velocity reconstruction error per clip:
             Returns shape: (Batch,)
             """
             reconstructed = self.forward(x)
             mse_per_clip = torch.mean((x - reconstructed) ** 2, dim=(1, 2))
+            if x.shape[1] > 1:
+                diff_true = x[:, 1:] - x[:, :-1]
+                diff_pred = reconstructed[:, 1:] - reconstructed[:, :-1]
+                temp_err_per_clip = torch.mean((diff_true - diff_pred) ** 2, dim=(1, 2))
+                return mse_per_clip + 2.0 * temp_err_per_clip
             return mse_per_clip
 
 
@@ -208,7 +212,12 @@ class DualStreamLSTMAutoencoder:
                     batch_x = batch_x.to(self.device)
                     self.optimizer.zero_grad()
                     reconstructed = self.model(batch_x)
-                    loss = self.criterion(reconstructed, batch_x)
+                    mse_loss = self.criterion(reconstructed, batch_x)
+                    # Temporal velocity difference loss
+                    diff_true = batch_x[:, 1:] - batch_x[:, :-1]
+                    diff_pred = reconstructed[:, 1:] - reconstructed[:, :-1]
+                    temp_loss = self.criterion(diff_pred, diff_true)
+                    loss = mse_loss + 1.0 * temp_loss
                     loss.backward()
                     self.optimizer.step()
                     epoch_loss += loss.item() * len(batch_x)
@@ -223,7 +232,11 @@ class DualStreamLSTMAutoencoder:
                     for (batch_x,) in val_loader:
                         batch_x = batch_x.to(self.device)
                         reconstructed = self.model(batch_x)
-                        loss = self.criterion(reconstructed, batch_x)
+                        mse_loss = self.criterion(reconstructed, batch_x)
+                        diff_true = batch_x[:, 1:] - batch_x[:, :-1]
+                        diff_pred = reconstructed[:, 1:] - reconstructed[:, :-1]
+                        temp_loss = self.criterion(diff_pred, diff_true)
+                        loss = mse_loss + 1.0 * temp_loss
                         val_loss += loss.item() * len(batch_x)
                 val_loss /= len(val_x)
                 val_losses.append(val_loss)
