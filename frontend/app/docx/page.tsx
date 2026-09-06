@@ -31,11 +31,10 @@ export default function DocxPage() {
 
           <article className="col-span-12 lg:col-span-9 lg:border-l lg:border-line lg:pl-12">
             <FadeIn>
-              <p className="type-label mb-4">University portal</p>
-              <h1 className="type-section">Documentation</h1>
+              <p className="type-label mb-4"></p>
+              <h1 className="type-section">Documentation Portal</h1>
               <p className="mt-5 max-w-2xl text-[16px] text-muted">
-                Formal record for {SITE.course}. Scroll the report; the index on
-                the left stays with the active section.
+                Formal record for {SITE.course}.
               </p>
             </FadeIn>
 
@@ -106,7 +105,7 @@ export default function DocxPage() {
               <div className="border-t border-line">
                 <div className="grid grid-cols-12 border-b border-line py-3">
                   <p className="col-span-6 type-label">Name</p>
-                  <p className="col-span-6 type-label">Role</p>
+                  <p className="col-span-6 type-label">Role and Contribution</p>
                 </div>
                 {TEAM.map((member) => (
                   <div

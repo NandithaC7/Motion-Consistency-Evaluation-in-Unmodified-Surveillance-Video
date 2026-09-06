@@ -54,7 +54,7 @@ export function DashboardMockup() {
             <div className="mt-4 space-y-2 text-[13px]">
               <Row k="eA · frame diff" v="0.00087" />
               <Row k="eB · optical flow" v="0.03168" />
-              <Row k="λ" v="2.0" />
+              <Row k="λ" v="0.1" />
             </div>
           </div>
           <div className="p-5 flex-1">
