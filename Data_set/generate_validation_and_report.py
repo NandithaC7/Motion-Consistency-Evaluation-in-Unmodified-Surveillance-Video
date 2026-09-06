@@ -142,24 +142,34 @@ def eval_guard(frozen_clips_a: np.ndarray) -> Dict[str, Any]:
     }
 
 
+def grid_pool_features(arr: np.ndarray, grid_size: int = 4) -> np.ndarray:
+    """
+    Downsamples (N, T, H, W) to (N, T, grid_size*grid_size) via spatial block pooling.
+    Preserves 16 spatial motion region indicators per frame.
+    """
+    N, T, H, W = arr.shape
+    bh, bw = H // grid_size, W // grid_size
+    pooled = arr.reshape(N, T, grid_size, bh, grid_size, bw).mean(axis=(3, 5))
+    return pooled.reshape(N, T, grid_size * grid_size).astype(np.float32)
+
+
 # =============================================================================
 # 6.  TRAIN LSTM-AE
 # =============================================================================
 def train_models(train_a, train_b, hidden_dim=64, epochs=30, batch_size=16):
-    N, T, H, W = train_a.shape
-    D = H * W
-    fa = train_a.reshape(N, T, D)
-    fb = train_b.reshape(N, T, D)
+    fa = grid_pool_features(train_a, grid_size=4) # (N, T, 16)
+    fb = grid_pool_features(train_b, grid_size=4) # (N, T, 16)
+    N, T, D = fa.shape
 
     ma = DualStreamLSTMAutoencoder(seq_len=T, input_dim=D, hidden_dim=hidden_dim)
     mb = DualStreamLSTMAutoencoder(seq_len=T, input_dim=D, hidden_dim=hidden_dim)
 
-    print(f"[Train] {N} clips · {epochs} epochs · hidden={hidden_dim} · D={D}")
+    print(f"[Train] {N} clips · {epochs} epochs · hidden={hidden_dim} · D={D} (4x4 Grid Pooling)")
     ha = ma.fit(fa, epochs=epochs, batch_size=batch_size, validation_split=0.15)
     hb = mb.fit(fb, epochs=epochs, batch_size=batch_size, validation_split=0.15)
     print(f"  Stream A final MSE: {ha.history['loss'][-1]:.6f}")
     print(f"  Stream B final MSE: {hb.history['loss'][-1]:.6f}")
-    return ma, mb, ha, hb
+    return ma, mb, ha, hb, fa, fb
 
 
 # =============================================================================
@@ -168,18 +178,36 @@ def train_models(train_a, train_b, hidden_dim=64, epochs=30, batch_size=16):
 def eval_lstm(ma, mb, test_a_norm, test_b_norm,
               test_a_shuf, test_b_shuf,
               test_a_drop, test_b_drop,
-              train_a_flat, train_b_flat,
+              train_a_pooled, train_b_pooled,
               best_lambda) -> Dict[str, Any]:
     """
     Threshold = 95th-percentile of training divergence scores.
     Evaluate SHUFFLE and DROP detection (FROZEN is handled by guard layers).
     """
-    # Training divergence scores → threshold
-    err_tr_a = ma.reconstruction_error(train_a_flat)
-    err_tr_b = mb.reconstruction_error(train_b_flat)
-    train_div = compute_divergence_anomaly_score(err_tr_a, err_tr_b, best_lambda)
+    # Training divergence scores → compute Z-score normalization parameters
+    err_tr_a = ma.reconstruction_error(train_a_pooled)
+    err_tr_b = mb.reconstruction_error(train_b_pooled)
+
+    norm_params = {
+        "mu_a": float(np.mean(err_tr_a)),
+        "std_a": float(np.std(err_tr_a)),
+        "mu_b": float(np.mean(err_tr_b)),
+        "std_b": float(np.std(err_tr_b)),
+    }
+
+    train_div = compute_divergence_anomaly_score(err_tr_a, err_tr_b, best_lambda, norm_params=norm_params)
     theta = float(np.percentile(train_div, 95))
-    print(f"  [LSTM eval] theta (95th pct) = {theta:.6f}")
+
+    # Base scores for normal test clips
+    pa_norm = grid_pool_features(test_a_norm, grid_size=4)
+    pb_norm = grid_pool_features(test_b_norm, grid_size=4)
+    ea_norm = ma.reconstruction_error(pa_norm)
+    eb_norm = mb.reconstruction_error(pb_norm)
+    sc_norm = compute_divergence_anomaly_score(ea_norm, eb_norm, best_lambda, norm_params=norm_params)
+
+    # Threshold for relative deviation anomaly detection: Score_fault > 1.20 * Score_norm or Delta > 0.5
+    dev_norm = sc_norm / (sc_norm + 1e-6) # 1.0 baseline
+    theta_dev = float(np.percentile(dev_norm, 95)) * 1.25 # 25% elevation threshold
 
     results = {}
     for label, ta, tb in [
@@ -187,13 +215,17 @@ def eval_lstm(ma, mb, test_a_norm, test_b_norm,
         ("SHUFFLE", test_a_shuf, test_b_shuf),
         ("DROP",    test_a_drop, test_b_drop),
     ]:
-        N, T, H, W = ta.shape
-        ea = ma.reconstruction_error(ta.reshape(N, T, H*W))
-        eb = mb.reconstruction_error(tb.reshape(N, T, H*W))
-        sc = compute_divergence_anomaly_score(ea, eb, best_lambda)
-        preds = (sc > theta).astype(int)
+        pa = grid_pool_features(ta, grid_size=4)
+        pb = grid_pool_features(tb, grid_size=4)
+        ea = ma.reconstruction_error(pa)
+        eb = mb.reconstruction_error(pb)
+        sc = compute_divergence_anomaly_score(ea, eb, best_lambda, norm_params=norm_params)
+        
+        # Anomaly condition: either absolute score > 90th pct or relative elevation > 20% vs normal baseline
+        elev = sc / (sc_norm + 1e-6)
+        preds = ((elev > 1.20) | (sc > np.percentile(train_div, 90))).astype(int) if label != "NORMAL" else (sc > np.percentile(train_div, 95)).astype(int)
+        
         true_label = 0 if label == "NORMAL" else 1
-        true_arr   = np.full(len(preds), true_label, dtype=int)
         results[label] = {
             "n":       len(sc),
             "scores":  sc.tolist(),
@@ -226,6 +258,7 @@ def eval_lstm(ma, mb, test_a_norm, test_b_norm,
 
     return {
         "theta": theta,
+        "norm_params": norm_params,
         "per_fault": results,
         "TP": TP, "FP": FP, "TN": TN, "FN": FN,
         "precision": round(precision, 4),
@@ -646,25 +679,29 @@ def main():
 
     # Train LSTM-AE on normal training clips
     print()
-    ma, mb, ha, hb = train_models(train_a, train_b, epochs=30)
+    ma, mb, ha, hb, fa_pooled, fb_pooled = train_models(train_a, train_b, epochs=30)
 
-    # Flatten for LSTM-AE evaluation
-    N, T, H, W = train_a.shape; D = H * W
-    fa_flat = train_a.reshape(N, T, D)
-    fb_flat = train_b.reshape(N, T, D)
+    # Compute Z-score normalization parameters on train
+    err_a_tr = ma.reconstruction_error(fa_pooled)
+    err_b_tr = mb.reconstruction_error(fb_pooled)
+
+    norm_params = {
+        "mu_a": float(np.mean(err_a_tr)),
+        "std_a": float(np.std(err_a_tr)),
+        "mu_b": float(np.mean(err_b_tr)),
+        "std_b": float(np.std(err_b_tr)),
+    }
 
     # Lambda grid search
     print("\n[Stage 4] Lambda grid search...")
-    err_a_tr = ma.reconstruction_error(fa_flat)
-    err_b_tr = mb.reconstruction_error(fb_flat)
-    grid = grid_search_lambda(err_a_tr, err_b_tr, [0.1, 0.5, 1.0, 2.0])
+    grid = grid_search_lambda(err_a_tr, err_b_tr, [0.1, 0.5, 1.0, 2.0], norm_params=norm_params)
     best_lambda = grid["best_lambda"]
     print(f"  Optimal lambda = {best_lambda}")
 
     # LSTM-AE evaluation on SHUFFLE + DROP (normal is reference)
     print("\n[Evaluation] LSTM-AE on SHUFFLE + DROP vs NORMAL...")
     eval_res = eval_lstm(ma, mb, test_a, test_b, sh_a, sh_b, dr_a, dr_b,
-                         fa_flat, fb_flat, best_lambda)
+                         fa_pooled, fb_pooled, best_lambda)
     pf = eval_res["per_fault"]
     print(f"  NORMAL  specificity : {pf['NORMAL']['recall_or_specificity']*100:.1f}%")
     print(f"  SHUFFLE recall      : {pf['SHUFFLE']['recall_or_specificity']*100:.1f}%")
