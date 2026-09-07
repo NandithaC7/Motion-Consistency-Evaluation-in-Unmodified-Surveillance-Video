@@ -23,7 +23,7 @@ export function Highlights() {
                 className={`h-full ${i < HIGHLIGHTS.length - 1 ? "md:pr-8 md:border-r md:border-line" : ""
                   }`}
               >
-                <p className="type-label mb-5">{item.lead}</p>
+                <p className="type-label mb-5">{(item as any).lead}</p>
                 <h3 className="text-[40px] md:text-[44px] leading-none tracking-[-0.03em] font-medium">
                   {item.title}
                 </h3>
